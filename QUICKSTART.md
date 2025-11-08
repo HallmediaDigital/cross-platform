@@ -11,11 +11,30 @@ That's it! Yarn 4 will be automatically installed via Corepack.
 
 ## Installation
 
-```bash
-# 1. Enable Corepack (comes with Node.js 16.10+)
-corepack enable
+### Step 1: Enable Corepack
 
-# 2. Install dependencies
+**Windows (requires Admin):**
+
+```powershell
+# Right-click PowerShell and "Run as Administrator", then:
+corepack enable
+```
+
+**Mac/Linux:**
+
+```bash
+corepack enable
+```
+
+> **Windows Note**: If you get a permission error, you MUST run PowerShell as Administrator. Or alternatively, install Yarn globally: `npm install -g yarn`
+
+### Step 2: Install Dependencies
+
+```bash
+# Navigate to project directory
+cd C:\dev\cross-platform
+
+# Install all dependencies
 yarn install
 ```
 
@@ -32,6 +51,7 @@ yarn workspace @cross-platform/prompt-web dev
 ```
 
 Or run all at once:
+
 ```bash
 yarn dev
 ```
@@ -45,6 +65,7 @@ yarn dev
    - [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent)
 
 2. Start the dev server:
+
 ```bash
 # Mermaid
 cd apps/mermaid/expo
@@ -106,6 +127,7 @@ cross-platform/
 1. Edit `packages/shared-utils/src/index.ts`
 2. Build it: `yarn workspace @cross-platform/shared-utils build`
 3. Use in apps:
+
 ```typescript
 import { formatDate } from '@cross-platform/shared-utils';
 ```
@@ -137,6 +159,7 @@ yarn lint
 ✅ Apps are running!
 
 Now try:
+
 1. 📝 Edit code and see hot reload
 2. 🧪 Add a test: `packages/shared-utils/src/index.test.ts`
 3. 🎨 Customize UI in the app files
@@ -146,16 +169,30 @@ Now try:
 ## Troubleshooting
 
 ### "Command not found: corepack"
+
 Update Node.js to version 16.10 or later.
 
+### "EPERM: operation not permitted" (Windows)
+
+**Solution 1 (Recommended):** Run PowerShell as Administrator, then run `corepack enable`
+
+**Solution 2:** Install Yarn globally (no admin needed):
+
+```bash
+npm install -g yarn
+```
+
 ### "Workspace not found"
+
 Run `yarn install` from the root directory.
 
 ### Expo app won't load
+
 1. Make sure you're on the same WiFi network
 2. Try: `yarn start --clear`
 
 ### Port already in use
+
 ```bash
 # Kill process on port 3000
 # Windows
@@ -167,6 +204,7 @@ lsof -ti:3000 | xargs kill
 ```
 
 ### Yarn 4 not working
+
 ```bash
 corepack enable
 corepack prepare yarn@4.0.0 --activate
@@ -187,9 +225,9 @@ corepack prepare yarn@4.0.0 --activate
 ## Getting Help
 
 Having issues? Check:
+
 1. The troubleshooting section above
 2. `CONTRIBUTING.md` for debugging tips
 3. GitHub Issues
 
 Happy coding! 🎉
-

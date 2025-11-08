@@ -29,11 +29,14 @@ monorepo/
 
 ```bash
 # Enable Corepack (comes with Node.js 16.10+)
+# Windows: Run PowerShell as Administrator first
 corepack enable
 
 # Install dependencies
 yarn install
 ```
+
+> **Windows Users**: See [WINDOWS-SETUP.md](./WINDOWS-SETUP.md) for complete Windows installation guide. If you get "EPERM: operation not permitted", run PowerShell as Administrator or use `npm install -g yarn` instead.
 
 ## 📦 Apps & Packages
 

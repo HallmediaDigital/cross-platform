@@ -24,6 +24,7 @@ Both can be deployed to Vercel independently!
 ### Option 1: Using Vercel Dashboard (Recommended)
 
 1. **Push to Git**
+
    ```bash
    git add .
    git commit -m "Add Expo web support"
@@ -125,14 +126,14 @@ Then open http://localhost:8000
 
 You'll have multiple deployment URLs:
 
-| App | Platform | URL Example |
-|-----|----------|-------------|
-| Mermaid Next.js | Web | `mermaid-web.vercel.app` |
-| Mermaid Expo | Web | `mermaid-expo-web.vercel.app` |
-| Mermaid Expo | iOS/Android | Via Expo Go or EAS Build |
-| Prompt Next.js | Web | `prompt-web.vercel.app` |
-| Prompt Expo | Web | `prompt-expo-web.vercel.app` |
-| Prompt Expo | iOS/Android | Via Expo Go or EAS Build |
+| App             | Platform    | URL Example                   |
+| --------------- | ----------- | ----------------------------- |
+| Mermaid Next.js | Web         | `mermaid-web.vercel.app`      |
+| Mermaid Expo    | Web         | `mermaid-expo-web.vercel.app` |
+| Mermaid Expo    | iOS/Android | Via Expo Go or EAS Build      |
+| Prompt Next.js  | Web         | `prompt-web.vercel.app`       |
+| Prompt Expo     | Web         | `prompt-expo-web.vercel.app`  |
+| Prompt Expo     | iOS/Android | Via Expo Go or EAS Build      |
 
 ## 🔐 Environment Variables
 
@@ -183,6 +184,7 @@ Update `apps/mermaid/expo/app.json`:
 ### Issue 1: Build Fails - "Module not found"
 
 **Solution:** Make sure to install from monorepo root:
+
 ```json
 {
   "buildCommand": "cd ../.. && yarn install && yarn workspace @cross-platform/mermaid-expo expo export -p web"
@@ -192,6 +194,7 @@ Update `apps/mermaid/expo/app.json`:
 ### Issue 2: Assets Not Loading
 
 **Solution:** Check asset paths and ensure they're in the `assets/` folder:
+
 ```typescript
 <Image source={require('./assets/logo.png')} />
 ```
@@ -199,16 +202,14 @@ Update `apps/mermaid/expo/app.json`:
 ### Issue 3: Gluestack UI Not Styled
 
 **Solution:** Make sure Babel config includes Gluestack UI:
+
 ```javascript
 // babel.config.js
 module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
-    plugins: [
-      'nativewind/babel',
-      '@gluestack-style/react/babel-plugin',
-    ],
+    plugins: ['nativewind/babel', '@gluestack-style/react/babel-plugin'],
   };
 };
 ```
@@ -216,35 +217,39 @@ module.exports = function (api) {
 ### Issue 4: Build Command Times Out
 
 **Solution:** Add to `vercel.json`:
+
 ```json
 {
-  "builds": [{
-    "src": "package.json",
-    "use": "@vercel/static-build",
-    "config": {
-      "distDir": "dist",
-      "maxDuration": 300
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist",
+        "maxDuration": 300
+      }
     }
-  }]
+  ]
 }
 ```
 
 ## 📊 Comparison: Next.js vs Expo Web
 
-| Feature | Next.js Web | Expo Web |
-|---------|-------------|----------|
-| **Code Sharing** | Separate codebase | Shares with mobile |
-| **Performance** | Excellent (SSR/SSG) | Good (SPA) |
-| **SEO** | Excellent | Limited (SPA) |
-| **Setup** | More config | Simpler |
-| **Routing** | Next.js Router | Expo Router |
-| **Best For** | Marketing sites, blogs | Apps, dashboards |
+| Feature          | Next.js Web            | Expo Web           |
+| ---------------- | ---------------------- | ------------------ |
+| **Code Sharing** | Separate codebase      | Shares with mobile |
+| **Performance**  | Excellent (SSR/SSG)    | Good (SPA)         |
+| **SEO**          | Excellent              | Limited (SPA)      |
+| **Setup**        | More config            | Simpler            |
+| **Routing**      | Next.js Router         | Expo Router        |
+| **Best For**     | Marketing sites, blogs | Apps, dashboards   |
 
 ## 🎯 Recommended Strategy
 
 ### Strategy 1: Separate Web Apps (Current Setup)
 
 **Use Next.js for:**
+
 - Public-facing websites
 - Marketing pages
 - Landing pages
@@ -252,6 +257,7 @@ module.exports = function (api) {
 - SEO-critical pages
 
 **Use Expo Web for:**
+
 - Authenticated app experiences
 - Admin dashboards
 - Internal tools
@@ -260,6 +266,7 @@ module.exports = function (api) {
 ### Strategy 2: Expo Web Only
 
 If you want maximum code reuse:
+
 1. Remove Next.js web folders
 2. Use Expo web for everything
 3. Deploy to Vercel with the configs above
@@ -267,6 +274,7 @@ If you want maximum code reuse:
 ### Strategy 3: Hybrid (Recommended)
 
 Keep both:
+
 - Next.js for public site (SEO, marketing)
 - Expo web for the actual app (after login)
 - Share backend utilities via `packages/`
@@ -314,6 +322,7 @@ vercel
 ### Step 5: Configure Domain (Optional)
 
 In Vercel:
+
 1. Go to Project Settings → Domains
 2. Add custom domain: `app.yourdomain.com`
 3. Update DNS records as instructed
@@ -323,6 +332,7 @@ In Vercel:
 ### Custom Headers
 
 Add to `vercel.json`:
+
 ```json
 {
   "headers": [
@@ -391,6 +401,7 @@ module.exports = withNativeWind(config, {
 Make your Expo web app installable:
 
 1. **Update app.json:**
+
 ```json
 {
   "expo": {
@@ -421,6 +432,7 @@ Already enabled by default with `expo export -p web`
 ### 2. Code Splitting
 
 Expo Router does this automatically:
+
 ```typescript
 // Lazy load heavy screens
 const HeavyScreen = lazy(() => import('./screens/Heavy'));
@@ -429,6 +441,7 @@ const HeavyScreen = lazy(() => import('./screens/Heavy'));
 ### 3. Image Optimization
 
 Use Expo's optimized image component:
+
 ```typescript
 import { Image } from 'expo-image';
 
@@ -452,6 +465,7 @@ yarn expo export -p web --bundle-output
 ### Vercel Analytics
 
 Enable in Vercel dashboard for:
+
 - Page views
 - Performance metrics
 - Core Web Vitals
@@ -459,6 +473,7 @@ Enable in Vercel dashboard for:
 ### Error Tracking
 
 Add Sentry:
+
 ```bash
 yarn add @sentry/react
 ```
@@ -525,8 +540,8 @@ vercel --prod
 **You now have a complete guide to deploying Expo web to Vercel!** 🎉
 
 Your architecture:
+
 - **Next.js Web** - Public pages, SEO
 - **Expo Web** - App experience, shared with mobile
 - **Expo Mobile** - iOS/Android via EAS
 - All deployed and managed independently! ✨
-

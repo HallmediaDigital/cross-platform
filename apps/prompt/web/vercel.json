@@ -2,6 +2,8 @@
   "buildCommand": "cd ../.. && yarn turbo run build --filter=@cross-platform/prompt-web",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "installCommand": "cd ../.. && yarn install"
+  "installCommand": "cd ../.. && yarn install",
+  "engines": {
+    "node": "20.x"
+  }
 }
-
